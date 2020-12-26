@@ -5,3 +5,4 @@ const KEY_RIGHT = 39
 
 
 const SPEED = 4
+const MOVEMENTS_FRAMES = 10

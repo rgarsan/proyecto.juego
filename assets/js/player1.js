@@ -3,9 +3,9 @@ class Player1 {
         this.ctx = ctx
 
         this.x = x
-        this.maxX = this.ctx.canvas.width / 2
+     
         this.y = y
-        this.vx=0
+        this.vx = 0
         this.vy = 0
 
         this.sprite = new Image()
@@ -18,16 +18,16 @@ class Player1 {
         this.sprite.horizontalFrameIndex = 0
         this.sprite.verticalFrameIndex = 0
 
+        this.sprite.drawCount = 0
+
         this.sprite.onload = () =>{
             this.sprite.isReady = true
             this.width = Math.floor(this.sprite.width/ this.sprite.horizontalFrames)
-            
-            
             this.height = this.sprite.height
         }
 
 
-        this.sprite.drawCount = 0
+       
        
         //Iniciamos los movements en false para posteriormente declarar la const status y cambiarlos
         this.movement = {
@@ -51,14 +51,19 @@ class Player1 {
                 0,
                 this.width,
                 this.height,
-                0,
-                this.ctx.canvas.height/2 - (this.height/2),
+                this.x,
+                this.y,
                 this.width *2,
                 this.height * 2
 
 
 
             )
+            // Contador para sprites
+            this.sprite.drawCount++
+            // LLamamos a la función animate declarada más abajo en cada pintado de la imagen
+            this.animate()
+          
         }
 
     }
@@ -69,16 +74,20 @@ class Player1 {
         switch(event.keyCode){
             case KEY_UP:
                 this.movement.up = status
+                this.vy = -SPEED
                
                 break;
             case KEY_DOWN:
                 this.movement.down = status
+                this.vy = SPEED
                 break;
             case KEY_LEFT:
                 this.movement.left = status
+                this.vx = -SPEED
                 break;
             case KEY_RIGHT:
                 this.movement.right = status
+                this.vx = SPEED
                 
                 break;
                 
@@ -89,18 +98,46 @@ class Player1 {
     }
 
     move(){
-        if(this.movement.right){
-            this.vx = SPEED
-          
-        }else if(this.movement.left){
-            this.vx = -SPEED
-        }else{
-            this.vx = 0
-        }
-
-
 
         this.x += this.vx
         this.y += this.vy
+
+
+        if(!this.movement.right && !this.movement.left && !this.movement.down && !this.movement.up){
+           
+            this.vy = 0
+            this.vx = 0
+        }
     }
+    animate(){
+        // LLamamos a la función animateSprite declarada abajo cada vez que haya movimiento, y si no, reseteo
+        if(this.movement.left || this.movement.right || this.movement.up || this.movement.down){
+           this.animateSprite()
+
+        } else{
+                this.resetAnimation()
+        }
+    }
+// Volvemos a la imagen 0 de las 5 que tiene el sprite
+    resetAnimation(){
+        this.sprite.horizontalFrameIndex = 0
+        this.sprite.verticalFrameIndex = 0
+    }
+
+    animateSprite(){
+        //con esto tendremos 10 fps
+        if(this.sprite.drawCount % MOVEMENTS_FRAMES===0){
+            //Cuando el index llegue a 5 volverá a empezar, y si no, le seguimos sumando 1
+            if(this.sprite.horizontalFrameIndex+1 === this.sprite.horizontalFrames){
+                this.sprite.horizontalFrameIndex = 0
+            }else{
+                this.sprite.horizontalFrameIndex++
+            }
+           
+        }
+
+      
+        
+    }
+
 }

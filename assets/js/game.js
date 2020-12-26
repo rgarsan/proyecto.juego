@@ -11,7 +11,7 @@ class Game{
 
         this.background = new Background(this.ctx)
 
-        this.player1 = new Player1(this.ctx)
+        this.player1 = new Player1(this.ctx ,0,200)
         
     }
     start(){
@@ -23,8 +23,9 @@ class Game{
                 this.move()
                 
                 this.draw()
+               
 
-                
+            
                
             },this.fps);
         }
@@ -43,6 +44,7 @@ class Game{
     move(){
       this.background.move()
       this.player1.move()
+      
     }
 
     onKeyEvent(event){
