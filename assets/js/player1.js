@@ -3,7 +3,8 @@ class Player1 {
         this.ctx = ctx
 
         this.x = x
-     
+        this.maxX = this.ctx.canvas.width/2
+        this.maxY = this.ctx.canvas.width
         this.y = y
         this.vx = 0
         this.vy = 0
@@ -37,6 +38,8 @@ class Player1 {
             right:false
         }
 
+        this.bullets = []
+
     }
 
     isReady(){
@@ -47,7 +50,7 @@ class Player1 {
         if(this.isReady()){
             this.ctx.drawImage(
                 this.sprite,
-                0,
+                this.sprite.horizontalFrameIndex * this.width,
                 0,
                 this.width,
                 this.height,
@@ -59,6 +62,8 @@ class Player1 {
 
 
             )
+
+            this.bullets.forEach(bullet => bullet.draw())
             // Contador para sprites
             this.sprite.drawCount++
             // LLamamos a la función animate declarada más abajo en cada pintado de la imagen
@@ -90,6 +95,12 @@ class Player1 {
                 this.vx = SPEED
                 
                 break;
+            case KEY_FIRE:
+                this.bullets.push(
+                    new Shot(this.ctx,this.x + this.width,this.y)
+                )
+                
+                break;
                 
                 default:
                     break;
@@ -99,14 +110,31 @@ class Player1 {
 
     move(){
 
+
         this.x += this.vx
         this.y += this.vy
+
+        this.bullets.forEach(bullet => bullet.move())
+
+        if(this.x >= this.maxX){
+            this.x = this.maxX
+        }else if(this.x <= 0){
+            this.x = 0
+        }else if(this.y <= 0 ){
+            this.y = 0
+        
+        }
 
 
         if(!this.movement.right && !this.movement.left && !this.movement.down && !this.movement.up){
            
             this.vy = 0
             this.vx = 0
+
+            
+       
+
+        
         }
     }
     animate(){
@@ -138,6 +166,14 @@ class Player1 {
 
       
         
+    }
+
+    colidesWith(element){
+        return this.x < element.x + element.width &&
+        this.x + this.width > element.x &&
+        this.y < element.y +  element.height &&
+        this.y + this.width >element.y
+
     }
 
 }
