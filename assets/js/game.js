@@ -20,6 +20,8 @@ class Game{
         ]
 
         this.points= 0
+        this.pointsCoint = new Coins(this.ctx,15,20)
+
         
     }
     start(){
@@ -51,9 +53,12 @@ class Game{
         this.player1.draw()
         this.coins.forEach(coin => coin.draw())
 
+        this.pointsCoint.draw()
+
         this.ctx.save()
         this.ctx.font = '18px Arial'
-        this.ctx.fillText(`Score: ${this.points}`,30,30)
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillText(`Score: ${this.points}`,50,40)
         this.ctx.restore()
     }
 
@@ -69,7 +74,11 @@ class Game{
     }
 
     checkCollitions(){
-        this.coins = this.coins.filter(coin => !this.player1.colidesWith(coin))
+        const restPoints = this.coins.filter(coin => !this.player1.colidesWith(coin))
+        const newPoints = this.coins.length - restPoints.length
+        this.points += newPoints*10
+
+        this.coins = restPoints
     }
 
    

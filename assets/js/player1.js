@@ -3,8 +3,8 @@ class Player1 {
         this.ctx = ctx
 
         this.x = x
-        this.maxX = this.ctx.canvas.width/2
-        this.maxY = this.ctx.canvas.width
+        this.maxX = this.ctx.canvas.width
+        this.maxY = this.ctx.canvas.height
         this.y = y
         this.vx = 0
         this.vy = 0
@@ -40,6 +40,7 @@ class Player1 {
 
         this.bullets = []
 
+        
     }
 
     isReady(){
@@ -97,8 +98,11 @@ class Player1 {
                 break;
             case KEY_FIRE:
                 this.bullets.push(
-                    new Shot(this.ctx,this.x + this.width,this.y)
+                    new Shot(this.ctx,this.x + this.width ,this.y)
                 )
+                console.log('jiji')
+                console.log(this.bullets.length)
+
                 
                 break;
                 
@@ -111,18 +115,22 @@ class Player1 {
     move(){
 
 
+        this.bullets.forEach(bullet => bullet.move())
+        
         this.x += this.vx
         this.y += this.vy
 
-        this.bullets.forEach(bullet => bullet.move())
+       
 
         if(this.x >= this.maxX){
-            this.x = this.maxX
+            this.x = this.maxX-this.width
         }else if(this.x <= 0){
             this.x = 0
         }else if(this.y <= 0 ){
             this.y = 0
         
+        }else if(this.y >= this.maxY){
+            this.y = this.maxY- this.height
         }
 
 
@@ -172,7 +180,7 @@ class Player1 {
         return this.x < element.x + element.width &&
         this.x + this.width > element.x &&
         this.y < element.y +  element.height &&
-        this.y + this.width >element.y
+        this.y + this.height >element.y
 
     }
 

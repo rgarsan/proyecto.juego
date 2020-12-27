@@ -7,10 +7,10 @@ class Coins{
         this.y = y
 
         this.sprite = new Image()
-        this.sprite.src = './assets/img/skull-coin.png'
+        this.sprite.src = './assets/img/new-coins.png'
         this.sprite.isReady = false
 
-        this.sprite.horizontalFrames = 7
+        this.sprite.horizontalFrames = 6
         this.sprite.verticalFrames = 1
 
         this.sprite.horizontalFrameIndex = 0
