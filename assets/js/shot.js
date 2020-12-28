@@ -9,7 +9,7 @@ class Shot{
         this.vy = SPEED
 
         this.sprite = new Image()
-        this.sprite.src = './assets/img/disparo.png'
+        this.sprite.src = './assets/img/disparo2.png'
         this.sprite.isReady= false
 
         this.sprite.horizontalFrames= 4
@@ -21,9 +21,9 @@ class Shot{
         this.sprite.onload = ()=>{
             this.sprite.isReady = true
             this.sprite.frameWidth = Math.floor(this.sprite.width/this.sprite.horizontalFrames)
-            this.sprite.frameHeight = Math.floor(this.sprite.height/this.sprite.verticallFrames)
-            this.width = this.sprite.frameWidth*2
-            this.height = this.sprite.frameHeight*2
+            this.sprite.frameHeight = Math.floor(this.sprite.height/this.sprite.verticalFrames)
+            this.width = this.sprite.frameWidth
+            this.height = this.sprite.frameHeight
         }
             this.sprite.drawCount = 0
 
@@ -36,7 +36,7 @@ class Shot{
         if(this.isReady()){
             this.ctx.drawImage(
                 this.sprite,
-                this.horizontalFrameIndex * this.sprite.frameWidth,
+                this.sprite.horizontalFrameIndex * this.sprite.frameWidth,
                 this.sprite.verticalFrameIndex * this.sprite.frameHeight,
                 this.sprite.frameWidth,
                 this.sprite.frameHeight,
@@ -68,6 +68,6 @@ class Shot{
     }
     move(){
         this.x += this.vx
-        this.y += this.vy
+       
     }
 }

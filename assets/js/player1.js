@@ -98,10 +98,11 @@ class Player1 {
                 break;
             case KEY_FIRE:
                 this.bullets.push(
-                    new Shot(this.ctx,this.x + this.width ,this.y)
+                    new Shot(this.ctx,this.x + this.width ,this.y + this.height)
                 )
-                console.log('jiji')
+
                 console.log(this.bullets.length)
+               
 
                 
                 break;
@@ -183,5 +184,6 @@ class Player1 {
         this.y + this.height >element.y
 
     }
+    
 
 }

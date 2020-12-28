@@ -22,10 +22,19 @@ class Game{
         this.points= 0
         this.pointsCoint = new Coins(this.ctx,15,20)
 
+        const theme = new Audio('./assets/sound/shoot.mp3')
+        theme.volume = 0.3
+
+        this.sounds = {
+            theme:theme,
+           
+        }
+
         
     }
     start(){
         if(!this.drawInterval){
+            this.sounds.theme.play()
             this.drawInterval = setInterval(()=>{
                 
                 this.clear()
