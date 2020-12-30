@@ -25,15 +25,19 @@ class Shot{
             this.width = this.sprite.frameWidth
             this.height = this.sprite.frameHeight
         }
+          
             this.sprite.drawCount = 0
 
     }
     isReady(){
+     
         return this.sprite.isReady
+        
     }
 
     draw(){
         if(this.isReady()){
+            
             this.ctx.drawImage(
                 this.sprite,
                 this.sprite.horizontalFrameIndex * this.sprite.frameWidth,
@@ -44,10 +48,8 @@ class Shot{
                 this.y,
                 this.width ,
                 this.height 
-
-
-
-            )
+                )
+          
             // Contador para sprites
             this.sprite.drawCount++
             // LLamamos a la función animate declarada más abajo en cada pintado de la imagen

@@ -5,6 +5,7 @@ class Coins{
         
         this.x = x
         this.y = y
+        this.vx = -1
 
         this.sprite = new Image()
         this.sprite.src = './assets/img/new-coins.png'
@@ -51,8 +52,18 @@ class Coins{
 
             this.sprite.drawCount++
             this.animate()
+            this.move()
         }
     }
+
+    move(){
+        
+            this.x += this.vx
+        }
+
+        
+
+    
 
     animate(){
         if(this.sprite.drawCount % MOVEMENTS_FRAMES === 0){
@@ -62,6 +73,7 @@ class Coins{
                 this.sprite.horizontalFrameIndex++
             }
             this.sprite.drawCount = 0
+            
         }
     }
 }

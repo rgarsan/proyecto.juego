@@ -50,6 +50,7 @@ class Player1 {
     draw(){
         if(this.isReady()){
             this.ctx.drawImage(
+                
                 this.sprite,
                 this.sprite.horizontalFrameIndex * this.width,
                 0,
@@ -63,8 +64,10 @@ class Player1 {
 
 
             )
+            
 
             this.bullets.forEach(bullet => bullet.draw())
+        
             // Contador para sprites
             this.sprite.drawCount++
             // LLamamos a la función animate declarada más abajo en cada pintado de la imagen
@@ -97,11 +100,13 @@ class Player1 {
                 
                 break;
             case KEY_FIRE:
+             
                 this.bullets.push(
-                    new Shot(this.ctx,this.x + this.width ,this.y + this.height)
+                    new Shot(this.ctx,this.x + this.width ,this.y + this.height),
+                    
                 )
 
-                console.log(this.bullets.length)
+                
                
 
                 
@@ -124,14 +129,15 @@ class Player1 {
        
 
         if(this.x >= this.maxX){
-            this.x = this.maxX-this.width
+            this.x = this.maxX -this.width
         }else if(this.x <= 0){
             this.x = 0
-        }else if(this.y <= 0 ){
+        }
+        else if(this.y < 0 ){
             this.y = 0
         
         }else if(this.y >= this.maxY){
-            this.y = this.maxY- this.height
+            this.y = this.maxY+ this.height
         }
 
 

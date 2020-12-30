@@ -12,23 +12,30 @@ class Game{
         this.background = new Background(this.ctx)
 
         this.player1 = new Player1(this.ctx ,0,200)
+        
+        this.intervalCoins=setInterval(()=>{
+            this.addCoins()
+        },5000)
 
         this.coins = [
-            new Coins(this.ctx,200, 300),
-            new Coins(this.ctx,150, 220),
-            new Coins(this.ctx,270, 120)
+            
+          
         ]
 
         this.points= 0
         this.pointsCoint = new Coins(this.ctx,15,20)
 
-        const theme = new Audio('./assets/sound/shoot.mp3')
+        const theme = new Audio('./assets/sound/theme.mp3')
         theme.volume = 0.3
 
         this.sounds = {
             theme:theme,
+            coins : new Audio('./assets/sound/coin.mp3'),
+            shoot : new Audio('./assets/sound/shoot.mp3')
            
         }
+
+        
 
         
     }
@@ -44,6 +51,8 @@ class Game{
                 this.draw()
 
                 this.checkCollitions()
+                
+             
                
 
             
@@ -60,6 +69,8 @@ class Game{
     draw(){
         this.background.draw()
         this.player1.draw()
+        
+       
         this.coins.forEach(coin => coin.draw())
 
         this.pointsCoint.draw()
@@ -74,6 +85,8 @@ class Game{
     move(){
       this.background.move()
       this.player1.move()
+     
+    
       
     }
 
@@ -87,8 +100,22 @@ class Game{
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
 
+        if(newPoints) {
+            this.sounds.coins.currentTime = 0
+            this.sounds.coins.play()
+            this.sounds.coins.volume = 0.3
+        }
+
         this.coins = restPoints
     }
-
+ addCoins(){
+        this.coins.push(
+           
+            new Coins(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height)),
+            
+        )
+        
+        }
+    }
    
-}
+   
