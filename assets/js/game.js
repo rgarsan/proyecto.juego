@@ -30,7 +30,8 @@ class Game{
         //this.enemies= []
 
         this.points= 0
-        this.pointsCoint = new Coins(this.ctx,15,20)
+        this.lifes = 4
+        
 
         const theme = new Audio('./assets/sound/theme.mp3')
         theme.volume = 0.3
@@ -84,12 +85,16 @@ class Game{
         this.coins.forEach(coin => coin.draw())
        // this.enemys.forEach(enemy=>enemy.draw() )
 
-        this.pointsCoint.draw()
+      
 
         this.ctx.save()
-        this.ctx.font = '18px Arial'
-        this.ctx.fillStyle = 'white'
+        this.ctx.fillStyle = 'grey'
+        this.ctx.fillRect(0, 0, 280, 60)
+        this.ctx.font = '20px Arial'
+        this.ctx.fillStyle = 'black'
         this.ctx.fillText(`Score: ${this.points}`,50,40)
+        this.ctx.fillText('Life: 4/4',180,40)
+
         this.ctx.restore()
     }
 
@@ -138,17 +143,16 @@ class Game{
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
 
+        this.coins = restPoints
+
         if(newPoints) {
             this.sounds.coins.currentTime = 0
             this.sounds.coins.play()
             this.sounds.coins.volume = 0.3
         }
 
-        this.coins = restPoints
-
-        if (this.coins.some(coin => this.player1.colision(coin))) {
-            this.stop()
-        }
+    
+        
     }
  addCoins(){
         this.coins.push(
