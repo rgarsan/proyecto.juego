@@ -1,10 +1,9 @@
 class Enemy{
-    constructor(ctx,x,y,w,h){
+    constructor(ctx,x,y){
         this.ctx = ctx
         this.x = x
         this.y = y
-        this.w = w
-        this.h = h
+        
 
 
         this.vx = -1
@@ -16,6 +15,9 @@ class Enemy{
 
         this.sprite.onload =()=>{
             this.sprite.isReady= true
+
+            this.width = 50
+            this.height = 50
         }
     }
 
@@ -30,8 +32,8 @@ draw(){
             
             this.x,
             this.y,
-            this.w,
-            this.h
+            this.width,
+            this.height
         )
 
         this.sprite.drawCount++

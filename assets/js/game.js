@@ -17,11 +17,17 @@ class Game{
         
         this.intervalCoins=setInterval(()=>{
             this.addCoins()
+            
         },5000)
+
+       /* this.intervalEnemies=setInterval(()=>{
+            
+           this.addEnemies()
+        },5000)*/
 
         this.coins = []
 
-        this.enemys= []
+        //this.enemies= []
 
         this.points= 0
         this.pointsCoint = new Coins(this.ctx,15,20)
@@ -76,7 +82,7 @@ class Game{
         
        
         this.coins.forEach(coin => coin.draw())
-        this.enemys.forEach(enemy=>enemy.draw() )
+       // this.enemys.forEach(enemy=>enemy.draw() )
 
         this.pointsCoint.draw()
 
@@ -100,7 +106,34 @@ class Game{
         this.player1.onKeyEvent(event)
     }
 
+    stop() {
+        clearInterval(this.drawInterval)
+       
+
+        this.ctx.save()
+        this.ctx.fillStyle = 'black'
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+
+        this.ctx.font = '35px Arial'
+        this.ctx.fillStyle = 'red'
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText('Game Over!',
+            this.ctx.canvas.width / 2,
+            this.ctx.canvas.height / 2 - 50)
+        this.ctx.font = '24px Arial'
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillText(`Your final score: ${this.points} points`,
+            this.ctx.canvas.width / 2,
+            this.ctx.canvas.height / 2 + 50)
+
+        this.ctx.restore()
+    }
+
     checkCollitions(){
+
+        /*if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
+            this.stop()
+        }*/
         const restPoints = this.coins.filter(coin => !this.player1.colidesWith(coin))
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
@@ -112,6 +145,10 @@ class Game{
         }
 
         this.coins = restPoints
+
+        if (this.coins.some(coin => this.player1.colision(coin))) {
+            this.stop()
+        }
     }
  addCoins(){
         this.coins.push(
@@ -122,11 +159,11 @@ class Game{
         
         }
 
-    addEnemys(){
+    /*addEnemies(){
         this.enemys.push(
             new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),50,50)
         )
-    }
+    }*/
     }
    
    
