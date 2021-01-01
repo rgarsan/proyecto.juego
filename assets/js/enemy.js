@@ -1,8 +1,10 @@
-class enemy{
-    constructor(ctx,x,y){
+class Enemy{
+    constructor(ctx,x,y,w,h){
         this.ctx = ctx
         this.x = x
         this.y = y
+        this.w = w
+        this.h = h
 
 
         this.vx = -1
@@ -28,8 +30,8 @@ draw(){
             
             this.x,
             this.y,
-            this.width,
-            this.height
+            this.w,
+            this.h
         )
 
         this.sprite.drawCount++

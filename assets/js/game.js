@@ -12,15 +12,16 @@ class Game{
         this.background = new Background(this.ctx)
 
         this.player1 = new Player1(this.ctx ,0,200)
+
+       
         
         this.intervalCoins=setInterval(()=>{
             this.addCoins()
         },5000)
 
-        this.coins = [
-            
-          
-        ]
+        this.coins = []
+
+        this.enemys= []
 
         this.points= 0
         this.pointsCoint = new Coins(this.ctx,15,20)
@@ -52,6 +53,7 @@ class Game{
 
                 this.checkCollitions()
                 
+                
              
                
 
@@ -69,9 +71,12 @@ class Game{
     draw(){
         this.background.draw()
         this.player1.draw()
+      
+        
         
        
         this.coins.forEach(coin => coin.draw())
+        this.enemys.forEach(enemy=>enemy.draw() )
 
         this.pointsCoint.draw()
 
@@ -116,6 +121,12 @@ class Game{
         )
         
         }
+
+    addEnemys(){
+        this.enemys.push(
+            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),50,50)
+        )
+    }
     }
    
    
