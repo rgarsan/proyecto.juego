@@ -1,4 +1,4 @@
-class Enemy{
+class Ovni{
     constructor(ctx,x,y){
         this.ctx = ctx
         this.x = x
@@ -9,10 +9,10 @@ class Enemy{
         this.vx = -4
 
         this.sprite = new Image()
-        this.sprite.src = './assets/img/meteorito.png'
+        this.sprite.src = './assets/img/ovni.png'
         this.sprite.isReady = false
 
-        this.sprite.horizontalFrames = 8
+        this.sprite.horizontalFrames = 5
         this.sprite.verticalFrames = 1
 
         this.sprite.horizontalFrameIndex = 0
@@ -25,8 +25,8 @@ class Enemy{
             this.sprite.frameWidth = Math.floor(this.sprite.width /this.sprite.horizontalFrames )
             this.sprite.frameHeight = Math.floor(this.sprite.height/this.sprite.verticalFrames)
             //Si queremos hacer la moneda más grande o más pequeña lo cambiamos aqui:
-            this.width = this.sprite.frameWidth 
-            this.height = this.sprite.frameHeight
+            this.width = this.sprite.frameWidth * 0.5
+            this.height = this.sprite.frameHeight * 0.5
 
            }
 

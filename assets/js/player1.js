@@ -137,7 +137,7 @@ class Player1 {
             this.y = 0
         
         }else if(this.y >= this.maxY){
-            this.y = this.maxY+ this.height
+            this.y = this.maxY - this.height
         }
 
 

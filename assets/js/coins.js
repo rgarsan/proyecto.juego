@@ -5,7 +5,7 @@ class Coins{
         
         this.x = x
         this.y = y
-        this.vx = -1
+        this.vx = -2
 
         this.sprite = new Image()
         this.sprite.src = './assets/img/new-coins.png'

@@ -17,20 +17,31 @@ class Game{
         
         this.intervalCoins=setInterval(()=>{
             this.addCoins()
+      
+          
             
         },5000)
 
-       /* this.intervalEnemies=setInterval(()=>{
+        this.intervalEnemies=setInterval(()=>{
             
            this.addEnemies()
-        },5000)*/
+        
+        },3000)
+
+        this.intervalEnemies=setInterval(()=>{
+            
+            this.addOvnis()
+         
+         },4000)
 
         this.coins = []
 
-        //this.enemies= []
+        this.enemies= []
+
+        this.ovnis = []
 
         this.points= 0
-        this.lifes = 4
+        this.lives = 4
         
 
         const theme = new Audio('./assets/sound/theme.mp3')
@@ -59,7 +70,8 @@ class Game{
                 this.draw()
 
                 this.checkCollitions()
-                
+
+          
                 
              
                
@@ -81,9 +93,10 @@ class Game{
       
         
         
-       
+        this.enemies.forEach(enemy=>enemy.draw())
+        this.ovnis.forEach(ovni=>ovni.draw())
         this.coins.forEach(coin => coin.draw())
-       // this.enemys.forEach(enemy=>enemy.draw() )
+       
 
       
 
@@ -93,7 +106,7 @@ class Game{
         this.ctx.font = '20px Arial'
         this.ctx.fillStyle = 'black'
         this.ctx.fillText(`Score: ${this.points}`,50,40)
-        this.ctx.fillText('Life: 4/4',180,40)
+        this.ctx.fillText(`Lives: ${this.lives}/4`,180,40)
 
         this.ctx.restore()
     }
@@ -136,9 +149,21 @@ class Game{
 
     checkCollitions(){
 
-        /*if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
-            this.stop()
-        }*/
+        
+        if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
+            this.lives--
+            if(this.lives === 0){
+                 this.stop()
+            }
+
+           }
+        if (this.ovnis.some(ovni => this.player1.colidesWith(ovni))) {
+            this.lives--
+            if(this.lives === 0){
+                 this.stop()
+            }
+
+           }
         const restPoints = this.coins.filter(coin => !this.player1.colidesWith(coin))
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
@@ -150,6 +175,9 @@ class Game{
             this.sounds.coins.play()
             this.sounds.coins.volume = 0.3
         }
+        
+
+        
 
     
         
@@ -163,11 +191,39 @@ class Game{
         
         }
 
-    /*addEnemies(){
-        this.enemys.push(
-            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),50,50)
+    addEnemies(){
+        this.enemies.push(
+            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height))
         )
-    }*/
+        
+    }
+
+    addOvnis(){
+        this.ovnis.push(
+            new Ovni(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height))
+        )
+    }
+
+    insertCoin(){
+        this.ctx.save()
+        this.ctx.fillStyle = 'green'
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
+
+        this.ctx.font = '35px Arial'
+        this.ctx.fillStyle = 'red'
+        this.ctx.textAlign = 'center'
+        this.ctx.fillText('STAGE 1/1',
+            this.ctx.canvas.width / 2,
+            this.ctx.canvas.height / 2 - 50)
+        this.ctx.font = '24px Arial'
+        this.ctx.fillStyle = 'white'
+        this.ctx.fillText(`PRESS ENTER AND ENJOY`,
+            this.ctx.canvas.width / 2,
+            this.ctx.canvas.height / 2 + 50)
+
+        this.ctx.restore()
+
+    }
     }
    
    
