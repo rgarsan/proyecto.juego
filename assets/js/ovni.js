@@ -7,6 +7,7 @@ class Ovni{
 
 
         this.vx = -4
+       
 
         this.sprite = new Image()
         this.sprite.src = './assets/img/ovni.png'
@@ -61,6 +62,7 @@ draw(){
 
 move(){
     this.x += this.vx
+  
 }
 
 animate(){
@@ -74,4 +76,6 @@ animate(){
         
     }
 }
+
+
 }

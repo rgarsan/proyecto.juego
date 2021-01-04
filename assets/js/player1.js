@@ -21,6 +21,8 @@ class Player1 {
 
         this.sprite.drawCount = 0
 
+        this.audio = new Audio('./assets/sound/shoot.mp3')
+
         this.sprite.onload = () =>{
             this.sprite.isReady = true
             this.width = Math.floor(this.sprite.width/ this.sprite.horizontalFrames)
@@ -66,7 +68,7 @@ class Player1 {
             )
             
 
-            this.bullets.forEach(bullet => bullet.draw())
+         this.bullets.forEach(bullet => bullet.draw())
         
             // Contador para sprites
             this.sprite.drawCount++
@@ -100,11 +102,9 @@ class Player1 {
                 
                 break;
             case KEY_FIRE:
-             
-                this.bullets.push(
-                    new Shot(this.ctx,this.x + this.width ,this.y + this.height),
-                    
-                )
+             this.audio.play()
+               
+                this.addBullets()
 
                 
                
@@ -189,6 +189,13 @@ class Player1 {
         this.y < element.y +  element.height &&
         this.y + this.height >element.y
 
+    }
+
+    addBullets(){
+        this.bullets.push(
+            new Shot(this.ctx,this.x + this.width ,this.y + this.height),
+            
+        )
     }
     
 

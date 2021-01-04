@@ -13,6 +13,8 @@ class Game{
 
         this.player1 = new Player1(this.ctx ,0,200)
 
+      
+
        
         
         this.intervalCoins=setInterval(()=>{
@@ -41,16 +43,17 @@ class Game{
         this.ovnis = []
 
         this.points= 0
+        
         this.lives = 4
         
 
         const theme = new Audio('./assets/sound/theme.mp3')
-        theme.volume = 0.3
+        theme.volume = 0
 
         this.sounds = {
             theme:theme,
-            coins : new Audio('./assets/sound/coin.mp3'),
-            shoot : new Audio('./assets/sound/shoot.mp3')
+            //coins : new Audio('./assets/sound/coin.mp3'),
+            //shoot : new Audio('./assets/sound/shoot.mp3')
            
         }
 
@@ -149,14 +152,50 @@ class Game{
 
     checkCollitions(){
 
+        // COLISIONES DE LAS BALAS CONTRA LOS ENEMIGOS------------------------------------------
+
+            this.enemies.forEach(enemy => {
+            const bulletToDelete = this.player1.bullets.find(bullet=> bullet.colidesWith(enemy))
+                                            // Find nos devuelve true o false
+            if(bulletToDelete){
+                
+                this.player1.bullets = this.player1.bullets.filter(bullet=> bullet !== bulletToDelete)
+                this.enemies = this.enemies.filter(filterEnemy => filterEnemy !== enemy)
+
+                
+                this.points += 5
         
+               
+
+            }
+
+        })
+
+        this.ovnis.forEach(ovni => {
+            const bulletToDelete = this.player1.bullets.find(bullet=> bullet.colidesWith(ovni))
+            
+            if(bulletToDelete){
+                
+                this.player1.bullets = this.player1.bullets.filter(bullet=> bullet !== bulletToDelete)
+                this.ovnis = this.ovnis.filter(filterOvni => filterOvni !== ovni)
+
+                this.points += 10
+            }
+        })
+
+    //-----------------------------------------------------------------------------------------------------
+
+
+     // COLISIONES DE LA NAVE CON LOS OBSTACULOS--------------------------------------------------------   
         if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
             this.lives--
-            if(this.lives === 0){
+            if(this.lives = 0){
                  this.stop()
             }
 
            }
+         
+
         if (this.ovnis.some(ovni => this.player1.colidesWith(ovni))) {
             this.lives--
             if(this.lives === 0){
@@ -164,7 +203,12 @@ class Game{
             }
 
            }
+        //----------------------------------------------------------------------
+      
+           
+     
         const restPoints = this.coins.filter(coin => !this.player1.colidesWith(coin))
+        
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
 
@@ -180,7 +224,7 @@ class Game{
         
 
     
-        
+           
     }
  addCoins(){
         this.coins.push(

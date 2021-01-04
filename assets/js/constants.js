@@ -5,5 +5,5 @@ const KEY_RIGHT = 39
 const KEY_FIRE = 32
 
 
-const SPEED = 4
+const SPEED = 5
 const MOVEMENTS_FRAMES = 30
