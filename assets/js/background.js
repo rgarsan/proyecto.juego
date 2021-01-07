@@ -8,7 +8,7 @@ class Background{
         this.width = this.ctx.canvas.width;
         this.height = this.ctx.canvas.height;
 
-        this.vx = -1
+        this.vx = -3
 
         this.img = new Image()
         this.img.src= './assets/img/space.jpg'

@@ -6,7 +6,7 @@ class Ovni{
         
 
 
-        this.vx = -4
+        this.vx = -9
        
 
         this.sprite = new Image()

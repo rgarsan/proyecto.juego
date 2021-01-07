@@ -6,7 +6,7 @@ class Enemy{
         
 
 
-        this.vx = -4
+        this.vx = -7
 
         this.sprite = new Image()
         this.sprite.src = './assets/img/meteorito.png'

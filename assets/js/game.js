@@ -52,11 +52,14 @@ class Game{
 
         this.sounds = {
             theme:theme,
-            //coins : new Audio('./assets/sound/coin.mp3'),
-            //shoot : new Audio('./assets/sound/shoot.mp3')
+            coins : new Audio('./assets/sound/coin.mp3'),
+            shoot : new Audio('./assets/sound/shoot.mp3'),
+            explosion : new Audio('./assets/sound/explosion.mp3'),
+            grito: new Audio('./assets/sound/grito.mp3'),
+            explosion2 : new Audio('./assets/sound/explosion2.mp3')
            
         }
-
+      
         
 
         
@@ -161,9 +164,14 @@ class Game{
                 
                 this.player1.bullets = this.player1.bullets.filter(bullet=> bullet !== bulletToDelete)
                 this.enemies = this.enemies.filter(filterEnemy => filterEnemy !== enemy)
-
-                
                 this.points += 5
+
+
+                this.sounds.explosion.currentTime = 0
+                this.sounds.explosion.play()
+                this.sounds.explosion.volume = 3
+
+            
         
                
 
@@ -178,10 +186,21 @@ class Game{
                 
                 this.player1.bullets = this.player1.bullets.filter(bullet=> bullet !== bulletToDelete)
                 this.ovnis = this.ovnis.filter(filterOvni => filterOvni !== ovni)
-
                 this.points += 10
+
+                this.sounds.explosion2.currentTime = 0
+                this.sounds.explosion2.play()
+                this.sounds.explosion2.volume = 3
+
+                this.sounds.grito.currentTime = 0
+                this.sounds.grito.play()
+                this.sounds.grito.volume = 9
+
+              
             }
         })
+       
+
 
     //-----------------------------------------------------------------------------------------------------
 
@@ -189,12 +208,13 @@ class Game{
      // COLISIONES DE LA NAVE CON LOS OBSTACULOS--------------------------------------------------------   
         if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
             this.lives--
-            if(this.lives = 0){
+            if(this.lives === 0){
                  this.stop()
             }
 
            }
          
+       
 
         if (this.ovnis.some(ovni => this.player1.colidesWith(ovni))) {
             this.lives--
@@ -217,8 +237,10 @@ class Game{
         if(newPoints) {
             this.sounds.coins.currentTime = 0
             this.sounds.coins.play()
-            this.sounds.coins.volume = 0.3
+            this.sounds.coins.volume = 0.4
         }
+
+        
         
 
         
