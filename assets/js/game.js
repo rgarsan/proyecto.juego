@@ -13,6 +13,10 @@ class Game{
 
         this.player1 = new Player1(this.ctx ,0,200)
 
+        this.canReceiveDamage =  true
+
+        this.ovniSpeed = -9
+
       
 
        
@@ -27,6 +31,7 @@ class Game{
         this.intervalEnemies=setInterval(()=>{
             
            this.addEnemies()
+          
         
         },3000)
 
@@ -56,7 +61,9 @@ class Game{
             shoot : new Audio('./assets/sound/shoot.mp3'),
             explosion : new Audio('./assets/sound/explosion.mp3'),
             grito: new Audio('./assets/sound/grito.mp3'),
-            explosion2 : new Audio('./assets/sound/explosion2.mp3')
+            explosion2 : new Audio('./assets/sound/explosion2.mp3'),
+            grito_nave : new Audio ('./assets/sound/grito_nave.mp3')
+
            
         }
       
@@ -76,6 +83,7 @@ class Game{
                 this.draw()
 
                 this.checkCollitions()
+
 
           
                 
@@ -161,10 +169,16 @@ class Game{
             const bulletToDelete = this.player1.bullets.find(bullet=> bullet.colidesWith(enemy))
                                             // Find nos devuelve true o false
             if(bulletToDelete){
+
                 
                 this.player1.bullets = this.player1.bullets.filter(bullet=> bullet !== bulletToDelete)
                 this.enemies = this.enemies.filter(filterEnemy => filterEnemy !== enemy)
-                this.points += 5
+                this.points += 10
+
+                
+                if(this.points % 40 === 0){
+                    this.ovniSpeed-= 0.5
+                }
 
 
                 this.sounds.explosion.currentTime = 0
@@ -188,13 +202,15 @@ class Game{
                 this.ovnis = this.ovnis.filter(filterOvni => filterOvni !== ovni)
                 this.points += 10
 
+                if(this.points % 20 === 0){
+                    this.ovniSpeed-=0.5
+                }
+
                 this.sounds.explosion2.currentTime = 0
                 this.sounds.explosion2.play()
                 this.sounds.explosion2.volume = 3
 
-                this.sounds.grito.currentTime = 0
-                this.sounds.grito.play()
-                this.sounds.grito.volume = 9
+               
 
               
             }
@@ -207,22 +223,48 @@ class Game{
 
      // COLISIONES DE LA NAVE CON LOS OBSTACULOS--------------------------------------------------------   
         if (this.enemies.some(enemy => this.player1.colidesWith(enemy))) {
-            this.lives--
-            if(this.lives === 0){
-                 this.stop()
+            if(this.canReceiveDamage){
+
+                this.lives--
+                this.canReceiveDamage = false
+
+               setTimeout(() => this.canReceiveDamage = true,2000)
+
+                 this.sounds.grito_nave.currentTime = 0
+                this.sounds.grito_nave.play()
+                this.sounds.grito_nave.volume = 0.2
+            
+            }
+            
             }
 
-           }
+            if(this.lives === 0){
+                this.stop()
+            }
+
+           
          
        
 
         if (this.ovnis.some(ovni => this.player1.colidesWith(ovni))) {
-            this.lives--
-            if(this.lives === 0){
-                 this.stop()
+            if(this.canReceiveDamage){
+                
+                
+                this.lives--
+                this.canReceiveDamage = false
+                setTimeout(()=>this.canReceiveDamage= true,2000)
+
+               this.sounds.grito_nave.currentTime = 0
+                this.sounds.grito_nave.play()
+                this.sounds.grito_nave.volume = 0.3
             }
+           
 
            }
+
+           if(this.lives === 0){
+            this.stop()
+        }
         //----------------------------------------------------------------------
       
            
@@ -231,6 +273,8 @@ class Game{
         
         const newPoints = this.coins.length - restPoints.length
         this.points += newPoints*10
+
+      
 
         this.coins = restPoints
 
@@ -259,14 +303,15 @@ class Game{
 
     addEnemies(){
         this.enemies.push(
-            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height))
+            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
         )
         
     }
 
     addOvnis(){
+        console.log(this.ovniSpeed)
         this.ovnis.push(
-            new Ovni(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height))
+            new Ovni(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
         )
     }
 
@@ -289,6 +334,13 @@ class Game{
 
         this.ctx.restore()
 
+    }
+
+    addLevel(){
+        if(this.points > 40){
+            this.enemy.vx = -12
+
+        }
     }
     }
    

@@ -1,12 +1,12 @@
 class Enemy{
-    constructor(ctx,x,y){
+    constructor(ctx,x,y,vx){
         this.ctx = ctx
         this.x = x
         this.y = y
         
 
 
-        this.vx = -7
+        this.vx = vx
 
         this.sprite = new Image()
         this.sprite.src = './assets/img/meteorito.png'

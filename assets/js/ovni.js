@@ -1,12 +1,12 @@
 class Ovni{
-    constructor(ctx,x,y){
+    constructor(ctx,x,y,vx){
         this.ctx = ctx
         this.x = x
         this.y = y
         
 
 
-        this.vx = -9
+        this.vx = vx
        
 
         this.sprite = new Image()
@@ -62,6 +62,7 @@ draw(){
 
 move(){
     this.x += this.vx
+ 
   
 }
 
