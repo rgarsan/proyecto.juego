@@ -24,3 +24,16 @@ canvas{
     top: 50%;
     transform: translate(-50% ,-50%);
 }
+
+.levelUp{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: fit-content;
+    color: rgb(134, 243, 119);
+    font-size: 45px;
+    font-family: 'Amatic SC', cursive;
+
+
+}

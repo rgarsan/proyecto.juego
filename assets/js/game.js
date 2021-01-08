@@ -17,6 +17,8 @@ class Game{
 
         this.ovniSpeed = -9
 
+        this.level = 0
+
       
 
        
@@ -49,11 +51,11 @@ class Game{
 
         this.points= 0
         
-        this.lives = 4
+        this.lives = 5
         
 
         const theme = new Audio('./assets/sound/theme.mp3')
-        theme.volume = 0
+        theme.volume = 1
 
         this.sounds = {
             theme:theme,
@@ -120,7 +122,7 @@ class Game{
         this.ctx.font = '20px Arial'
         this.ctx.fillStyle = 'black'
         this.ctx.fillText(`Score: ${this.points}`,50,40)
-        this.ctx.fillText(`Lives: ${this.lives}/4`,180,40)
+        this.ctx.fillText(`Lives: ${this.lives}`,180,40)
 
         this.ctx.restore()
     }
@@ -154,7 +156,9 @@ class Game{
             this.ctx.canvas.height / 2 - 50)
         this.ctx.font = '24px Arial'
         this.ctx.fillStyle = 'white'
-        this.ctx.fillText(`Your final score: ${this.points} points`,
+      
+        this.ctx.fillText(`Level:${this.level}, Your final score: ${this.points} points`,
+
             this.ctx.canvas.width / 2,
             this.ctx.canvas.height / 2 + 50)
 
@@ -175,10 +179,17 @@ class Game{
                 this.enemies = this.enemies.filter(filterEnemy => filterEnemy !== enemy)
                 this.points += 10
 
-                
-                if(this.points % 40 === 0){
-                    this.ovniSpeed-= 0.5
+    // AUMENTAMOS VELOCIDAD A LOS ENEMIGOS:            
+                if(this.points % 100 === 0){
+                    this.ovniSpeed--
+                    this.level++
+                    this.addLevel()
+                   
                 }
+                if(this.points % 300===0){
+                    this.lives++
+                }
+               
 
 
                 this.sounds.explosion.currentTime = 0
@@ -202,13 +213,21 @@ class Game{
                 this.ovnis = this.ovnis.filter(filterOvni => filterOvni !== ovni)
                 this.points += 10
 
-                if(this.points % 20 === 0){
-                    this.ovniSpeed-=0.5
+        // AUMENTAMOS VELOCIDAD A LOS ENEMIGOS:--------------------------------------------
+
+                if(this.points % 100 === 0){
+                    this.ovniSpeed--
+                    this.level++
+                    this.addLevel()
+                   
+                }
+                if(this.points % 300 ===0){
+                    this.lives++
                 }
 
                 this.sounds.explosion2.currentTime = 0
                 this.sounds.explosion2.play()
-                this.sounds.explosion2.volume = 3
+                this.sounds.explosion2.volume = 2
 
                
 
@@ -232,7 +251,7 @@ class Game{
 
                  this.sounds.grito_nave.currentTime = 0
                 this.sounds.grito_nave.play()
-                this.sounds.grito_nave.volume = 0.2
+                this.sounds.grito_nave.volume = 0.5
             
             }
             
@@ -256,7 +275,7 @@ class Game{
 
                this.sounds.grito_nave.currentTime = 0
                 this.sounds.grito_nave.play()
-                this.sounds.grito_nave.volume = 0.3
+                this.sounds.grito_nave.volume = 0.5
             }
            
 
@@ -296,6 +315,8 @@ class Game{
         this.coins.push(
            
             new Coins(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height)),
+            new Coins(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height)),
+            new Coins(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height)),
             
         )
         
@@ -305,11 +326,17 @@ class Game{
         this.enemies.push(
             new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
         )
+        this.enemies.push(
+            new Enemy(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
+        )
         
     }
 
     addOvnis(){
-        console.log(this.ovniSpeed)
+       
+        this.ovnis.push(
+            new Ovni(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
+        )
         this.ovnis.push(
             new Ovni(this.ctx,this.canvas.width, Math.floor(Math.random()*this.canvas.height),this.ovniSpeed)
         )
@@ -337,11 +364,24 @@ class Game{
     }
 
     addLevel(){
-        if(this.points > 40){
-            this.enemy.vx = -12
-
-        }
+      /*  this.ctx.save()
+        this.ctx.fillStyle = 'green'
+        this.ctx.fillRect(0, 0, 280, 60)
+        this.ctx.font = '20px Arial'
+        this.ctx.fillStyle = 'black'
+        this.ctx.fillText(`New Level: ${this.level}`,50,40)
+        
+        this.ctx.restore()*/
+        const levelUpText = document.createElement('h3')
+        levelUpText.classList.add('levelUp')
+        levelUpText.innerText = `New Level ${this.level}`
+        document.getElementById('game').appendChild(levelUpText)
+        setTimeout(()=>{
+            levelUpText.remove()
+        },2000)
     }
+
+    
     }
    
    
